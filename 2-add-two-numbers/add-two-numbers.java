@@ -8,34 +8,31 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-import java.math.*;
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        StringBuilder sb = new StringBuilder();
-        ListNode first = l1;
-        while(first!=null){
-            sb.append(first.val);
-            first = first.next;
+        ListNode n = new ListNode(4);
+        ListNode cur = n;
+        int c = 0;
+        while(l1!=null || l2!=null || c!=0){
+            int v1,v2;
+            if(l1!=null){
+                v1 = l1.val;
+            }else{
+                v1 = 0;
+            }
+            if(l2!=null){
+                v2 = l2.val;
+            }else{
+                v2 = 0;
+            }
+            int sum = v1+v2+c;
+            c = sum/10;
+            cur.next = new ListNode(sum%10);
+            cur = cur.next;
+
+            if(l1!=null) l1 = l1.next;
+            if(l2!=null) l2 = l2.next;
         }
-        StringBuilder sb2 = new StringBuilder();
-        ListNode second = l2;
-        while(second!=null){
-            sb2.append(second.val);
-            second = second.next;
-        }
-        BigInteger fnum = new BigInteger(sb.reverse().toString());
-        BigInteger snum = new BigInteger(sb2.reverse().toString());
-        BigInteger sum = fnum.add(snum);
-        // System.out.println(n);
-        ListNode ans = new ListNode(9);
-        ListNode temp = ans;
-        String s = sum.toString();
-        int len = s.length();
-        for(int i=len-1;i>=0;i--){
-            ListNode cur = new ListNode(s.charAt(i)-'0');
-            temp.next = cur;
-            temp = temp.next;
-        }
-        return ans.next;
+        return n.next;
     }
 }
